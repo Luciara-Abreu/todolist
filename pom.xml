@@ -39,6 +39,13 @@
       <optional>true</optional>
     </dependency>
 
+<!-- https://mvnrepository.com/artifact/at.favre.lib/bcrypt -->
+		<dependency>
+				<groupId>at.favre.lib</groupId>
+				<artifactId>bcrypt</artifactId>
+				<version>0.7.0</version>
+		</dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
