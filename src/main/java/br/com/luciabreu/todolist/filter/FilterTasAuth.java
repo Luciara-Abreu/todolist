@@ -51,14 +51,15 @@ public class FilterTasAuth extends OncePerRequestFilter {
       var user = this.userRepository.findByUserName(username);
 
       if (user == null) {
-        response.sendError(401, "Usuário não autorizado.");
+        response.sendError(401);
       } else {
         // validar a senha
         var passwordVerify = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
         if (passwordVerify.verified) {
+          request.setAttribute("idUser", user.getId());
           filterChain.doFilter(request, response);
         } else {
-          response.sendError(401, "Usuário não autorizado.");
+          response.sendError(401);
         }
       }
 
