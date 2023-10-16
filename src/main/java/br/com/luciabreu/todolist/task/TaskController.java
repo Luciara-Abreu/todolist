@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.luciabreu.todolist.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -60,20 +61,20 @@ public class TaskController {
 
   // Atualizar uma task passando o Id da task
   @PutMapping("/{id}")
-  public ResponseEntity<Object> update(@RequestBody TaskModel taskModel, @PathVariable UUID id,
-      HttpServletRequest request) {
+  public ResponseEntity<Object> update(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request) {
     var optionalTask = this.taskRepository.findById(id);
 
     if (optionalTask.isPresent()) {
-      var idUser = request.getAttribute("idUser");
-      taskModel.setIdUser((UUID) idUser);
-      taskModel.setId(id);
+      TaskModel task = optionalTask.get();
+    
+      // Usa o método copyNonNullProperties para copiar propriedades não nulas de taskModel para task
+      Utils.copyNonNullProperties(taskModel, task);
 
-      TaskModel updatedTask = this.taskRepository.save(taskModel);
+      TaskModel updatedTask = this.taskRepository.save(task);
       return ResponseEntity.status(HttpStatus.OK).body(updatedTask);
     }
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
   }
-
+  
 }
