@@ -63,9 +63,15 @@ public class TaskController {
   @PutMapping("/{id}")
   public ResponseEntity<Object> update(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request) {
     var optionalTask = this.taskRepository.findById(id);
+    var idUser = request.getAttribute("idUser");
 
-    if (optionalTask.isPresent()) {
+      if (optionalTask.isPresent()) {
       TaskModel task = optionalTask.get();
+
+      // Verifica se o usuário tem permissão para alterar essa tarefa
+      if (!task.getIdUser().equals(idUser)) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Usuário não tem permissão para alterar essa tarefa.");
+      }
     
       // Usa o método copyNonNullProperties para copiar propriedades não nulas de taskModel para task
       Utils.copyNonNullProperties(taskModel, task);
