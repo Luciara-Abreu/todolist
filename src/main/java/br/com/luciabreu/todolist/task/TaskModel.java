@@ -23,8 +23,8 @@ import lombok.Data;
  * 
  */
 
- @Data
- @Entity(name = "tb_tasks")
+@Data
+@Entity(name = "tb_tasks")
 public class TaskModel {
 
   @Id
@@ -44,7 +44,7 @@ public class TaskModel {
   private LocalDateTime createdAt;
 
   public void setTitle(String title) throws Exception {
-    if(title.length() > 50){
+    if (title.length() > 50) {
       throw new Exception("O campo de titulo deve conter no máximo 50 caracteres");
     }
     this.title = title;
