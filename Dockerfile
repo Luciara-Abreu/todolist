@@ -7,8 +7,8 @@
 
 FROM openjdk:17-jdk-alpine
 VOLUME /tmp
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY ${JAR_FILE} /todolist.jar
+ENTRYPOINT ["java","-jar","/todolist.jar"]
 EXPOSE 8080:8080
 
 
