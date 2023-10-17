@@ -12,15 +12,10 @@ FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build /target/todolist-0.0.1.jar app.jar
+COPY --from=build /target/todolist-1.0.0.jar app.jar
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
 
-# ENTRYPOINT [ "java", "-jar", "app.jar" ]
-# FROM openjdk:17-jdk-alpine
-# VOLUME /tmp
-# COPY ${JAR_FILE} /todolist.jar
-# ENTRYPOINT ["java","-jar","/todolist.jar"]
-# EXPOSE 8080:8080
+
 
 
 
